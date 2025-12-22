@@ -1,0 +1,9 @@
+src/
+ ├─ components/
+ │   ├─ Calculator.tsx
+ │   ├─ Display.tsx
+ │   └─ Button.tsx
+ ├─ logic/
+ │   └─ calculatorLogic.ts
+ ├─ styles/
+ └─ App.tsx
