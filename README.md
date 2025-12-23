@@ -6,12 +6,8 @@ Como rodar? clone o repositório, instale as dependênciass (npm install) e por 
 <div align="center">
   <p><strong>Modo Claro e Modo Escuro</strong></p>
 
-  <img src="./calculadora-react/assets/capturadetela1.png"
-       width="300"
-       style="display:inline-block; margin-right:16px;" />
-
-  <img src="./calculadora-react/assets/capturadetela2.png"
-       width="300"
-       style="display:inline-block;" />
+  <img src="./calculadora-react/assets/capturadetela1.png" width="300">
+  <img src="./calculadora-react/assets/capturadetela2.png" width="300">
 </div>
+
 
