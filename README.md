@@ -8,8 +8,8 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 <div align="center">
   <p><strong>Modo Claro e Modo Escuro</strong></p>
-  <img src="./calculadora-react/assets/capturadetela1.png" alt="Calculadora Modo Claro" width="340px">
-  <img src="./calculadora-react/assets/capturadetela2.png" alt="Calculadora Modo Escuro" width="340px">
+  <img src="./assets/capturadetela1.png" alt="Calculadora Modo Claro" width="340px">
+  <img src="./assets/capturadetela2.png" alt="Calculadora Modo Escuro" width="340px">
 </div>
 
 ## React Compiler
