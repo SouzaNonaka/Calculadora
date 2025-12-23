@@ -1,7 +1,15 @@
+import { forwardRef } from "react";
+
 type DisplayProps = {
   value: string;
 };
 
-export function Display({ value }: DisplayProps) {
-  return <div className="display">{value}</div>;
-}
+export const Display = forwardRef<HTMLDivElement, DisplayProps>(
+  ({ value }, ref) => {
+    return (
+      <div ref={ref} className="display">
+        {value}
+      </div>
+    );
+  }
+);

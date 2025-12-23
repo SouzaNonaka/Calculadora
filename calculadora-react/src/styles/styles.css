@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: system-ui, -aplle-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 :root {
@@ -13,7 +13,7 @@
   --btn-hover-brightness: 1.15;
   --operator-bg: #f7a737;
   --equal-bg: #62db81;
-  --clear-bg: #e23a07e8;
+  --clear-bg: #e23a07;
 }
 
 [data-theme="dark"] {
@@ -24,7 +24,7 @@
   --btn-bg: #333333;
   --btn-text: #ffffff;
   --btn-hover-brightness: 1.2;
-  --operator-bg: #f39c12;
+  --operator-bg: #c79648;
   --equal-bg: #2ecc71;
   --clear-bg: #e74c3c;
 }
@@ -36,39 +36,73 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
+  padding: 20px;
   transition: background-color 0.3s ease;
 }
-.display {
-  background: var(--bg-display);
-  border-radius: 12px;
-  padding: 20px;
-  font-size: 36px;
-  text-align: right;
-  margin-bottom: 20px;
-  color: var(--text-main);
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  word-break: break-all;
-  transition: all 0.3s ease;
-}
+
 .calculator {
-  width: 100%;
-  max-width: 340px; /* Ajustei um pouco para caber os botões com folga */
+  width: 340px;
+  max-width: 100%;
+  min-height: 540px;
   padding: 24px;
   border-radius: 24px;
   background: var(--bg-calculator);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  align-self: flex-end;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.display {
+  background: var(--bg-display);
+  color: var(--text-main);
+  border-radius: 14px;
+  width: 100%;
+  height: 100px;
+  max-width: 100%;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 42px;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .display {
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4),
+    inset 0 -1px 3px rgba(255, 255, 255, 0.05);
+}
+
+.display::-webkit-scrollbar {
+  display: none;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  width: 100%;
 }
 
 .button {
@@ -84,28 +118,30 @@ body {
   justify-content: center;
   background: var(--btn-bg);
   color: var(--btn-text);
-  min-width: 0;
-}
-
-.button.equal {
-  grid-column: span 2;
-  background: var(--equal-bg) !important;
+  transition: transform 0.1s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .button:hover {
   filter: brightness(var(--btn-hover-brightness));
+  transform: translateY(2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .button:active {
-  transform: scale(0.95);
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--operator-bg);
+  outline-offset: 2px;
 }
 
 .button.operator {
   background: var(--operator-bg);
-}
-
-[data-theme="dark"] .button.operator {
-  background: #c79648ff;
 }
 
 .button.clear {
@@ -113,23 +149,53 @@ body {
 }
 
 .button.equal {
-  background: var(--equal-bg) !important;
+  background: var(--equal-bg);
   grid-column: span 2;
 }
 
 .button.backspace {
-  background: #ff1919ff !important;
+  background: #ff1919;
   font-size: 16px;
 }
 
 [data-theme="dark"] .button.backspace {
-  background: #af1010ff !important;
+  background: #af1010;
 }
-.theme-toggle {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  margin-bottom: 8px;
-  align-self: flex-end;
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.display.flash {
+  animation: flash 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .calculator,
+  body,
+  .display {
+    transition: none;
+    animation: none;
+  }
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:focus-visible {
+  outline: none;
+}
+.button.operator:focus-visible {
+  outline: 2px solid var(--operator-bg);
+  outline-offset: 2px;
 }

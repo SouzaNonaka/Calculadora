@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Display } from "./display";
 import { Button } from "./button";
 import "../styles/styles.css";
@@ -9,6 +9,8 @@ export function Calculator() {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     return (localStorage.getItem("theme") as "light" | "dark") || "light";
   });
+
+  const displayRef = useRef<HTMLDivElement | null>(null);
 
   function isOperator(char: string) {
     return ["+", "-", "×", "÷"].includes(char);
@@ -45,7 +47,12 @@ export function Calculator() {
     try {
       const normalized = expression.replace(/×/g, "*").replace(/÷/g, "/");
       const result = Function(`"use strict"; return (${normalized})`)();
-      setExpression(String(result));
+      const roundedResult = Number(Math.round(Number(result + "e10")) + "e-10");
+      if (!Number.isFinite(roundedResult)) {
+        setExpression("Erro");
+      } else {
+        setExpression(String(roundedResult));
+      }
       setJustCalculated(true);
     } catch {
       setExpression("Erro");
@@ -65,6 +72,15 @@ export function Calculator() {
     document.body.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const el = displayRef.current;
+    if (!el) return;
+
+    el.classList.remove("flash");
+    void el.offsetWidth;
+    el.classList.add("flash");
+  }, [expression]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -94,7 +110,7 @@ export function Calculator() {
         {theme === "light" ? "🌙" : "☀️"}
       </button>
 
-      <Display value={expression} />
+      <Display ref={displayRef} value={expression} />
 
       <div className="grid">
         <Button
